@@ -1,0 +1,54 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Vehicle {
+  id: ID!
+  first_name: String!
+  last_name: String!
+  email: String!
+  car_make: String!
+  car_model: String!
+  vin: String!
+  manufactured_date: DateTime!
+  age_of_vehicle: Float!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  getAllVehicle: [Vehicle!]!
+  getOnevehicle(id: Int!): Vehicle!
+}
+
+type Mutation {
+  createVehicle(createVehicleInput: CreateVehicleInput!): Vehicle!
+  updateVehicle(updateVehicleInput: UpdateVehicleInput!): Vehicle!
+  removeVehicle(id: Int!): Vehicle!
+}
+
+input CreateVehicleInput {
+  first_name: String!
+  last_name: String!
+  email: String!
+  car_make: String!
+  car_model: String!
+  vin: String!
+  manufactured_date: DateTime!
+  age_of_vehicle: Float!
+}
+
+"""Data required to create a new vehicle/member record."""
+input UpdateVehicleInput {
+  first_name: String!
+  last_name: String!
+  email: String!
+  car_make: String!
+  car_model: String!
+  vin: String!
+  manufactured_date: DateTime!
+  age_of_vehicle: Int
+}
