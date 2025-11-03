@@ -19,15 +19,47 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type PageInfo {
+  totalItems: Int!
+  totalPages: Int!
+  currentPage: Int!
+  itemsPerPage: Int!
+}
+
+type PaginatedVehicles {
+  items: [Vehicle!]!
+  pageInfo: PageInfo!
+}
+
 type Query {
+  """Lists vehicles with server-side pagination and sorting."""
+  listVehicles(paginationInput: PaginationInput!): PaginatedVehicles!
+
+  """
+  Searches car models using wildcards (e.g., M* for models starting with M).
+  """
+  searchVehicles(
+    """Search term for car model (use * for wildcard)"""
+    query: String!
+    paginationInput: PaginationInput!
+  ): PaginatedVehicles!
   getAllVehicle: [Vehicle!]!
   getOnevehicle(id: Int!): Vehicle!
 }
 
+input PaginationInput {
+  page: Int! = 1
+  limit: Int! = 100
+}
+
 type Mutation {
   createVehicle(createVehicleInput: CreateVehicleInput!): Vehicle!
-  updateVehicle(updateVehicleInput: UpdateVehicleInput!): Vehicle!
-  removeVehicle(id: Int!): Vehicle!
+  updateeVehicle(id: String!, updateVehicleInput: UpdateVehicleInput!): Vehicle!
+  removeVehicle(id: Int!): Vehicle
+  triggerExport(
+    """Minimum age of vehicles (in years) to export."""
+    minAge: Int!
+  ): String!
 }
 
 input CreateVehicleInput {
@@ -41,7 +73,7 @@ input CreateVehicleInput {
   age_of_vehicle: Float!
 }
 
-"""Data required to create a new vehicle/member record."""
+"""Data required to update a vehicle record."""
 input UpdateVehicleInput {
   first_name: String!
   last_name: String!

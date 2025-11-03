@@ -1,8 +1,10 @@
-import { ObjectType, Field, Int, ID } from '@nestjs/graphql';
+import { ObjectType, Field, Directive , ID } from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@ObjectType() //graphql
-@Entity() // typeORM
+
+@ObjectType()
+@Directive('@key(fields: "vin")')
+@Entity()
 export class Vehicle {
   @Field(()=>ID)
   @PrimaryGeneratedColumn()
